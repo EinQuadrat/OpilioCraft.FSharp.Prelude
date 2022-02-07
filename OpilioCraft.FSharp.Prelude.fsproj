@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugType>none</DebugType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Carsten Schäfer</Authors>
+    <Description>Collection of some useful code snippets for FSharp development</Description>
+    <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>
+    <PackageTags>OpilioCraft;FSharp</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="DisposableBase.fs" />
+    <Compile Include="IO.fs" />
+    <Compile Include="Option.fs" />
+    <Compile Include="Prelude.fs" />
+    <Compile Include="Text.fs" />
+    <Compile Include="TryWrapper.fs" />
+    <Compile Include="ActivePatterns.fs" />
+    <Compile Include="UserSettings.fs" />
+  </ItemGroup>
+
+</Project>
