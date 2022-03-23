@@ -9,7 +9,7 @@
     <Description>Collection of some useful code snippets for FSharp development</Description>
     <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>
     <PackageTags>OpilioCraft;FSharp</PackageTags>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.4.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +17,7 @@
     <Compile Include="DisposableBase.fs" />
     <Compile Include="FileSystem.fs" />
     <Compile Include="Fingerprint.fs" />
+    <Compile Include="FlexibleValue.fs" />
     <Compile Include="IO.fs" />
     <Compile Include="Option.fs" />
     <Compile Include="Prelude.fs" />
