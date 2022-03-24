@@ -24,4 +24,4 @@ type FlexibleValue =
             | :? System.TimeOnly as timeValue -> Time timeValue
             | :? System.DateTime as datetimeValue -> DateTime datetimeValue
             | :? System.TimeSpan as timespanValue -> TimeSpan timespanValue
-            | _ -> invalidArg "value" "{nameof<FlexibleValue>} does not support incoming type {incoming.GetType().Name}"
+            | _ -> invalidArg "value" $"{nameof(FlexibleValue)} does not support incoming type {incoming.GetType().Name}"
