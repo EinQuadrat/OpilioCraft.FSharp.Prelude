@@ -2,14 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DebugType>portable</DebugType>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>OpilioCraft.FSharp.Prelude</PackageId>
+    <Version>1.4.3</Version>
     <Authors>Carsten Schäfer</Authors>
     <Description>Collection of some useful code snippets for FSharp development</Description>
     <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>
+    <RepositoryUrl>https://github.com/EinQuadrat/OpilioCraft.FSharp.Prelude.git</RepositoryUrl>
     <PackageTags>OpilioCraft;FSharp</PackageTags>
-    <VersionPrefix>1.4.2</VersionPrefix>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugType>portable</DebugType>
+    <RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
