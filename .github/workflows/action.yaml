@@ -15,3 +15,8 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Pack
+        run: dotnet pack --configuration Release
+      - name: Publish
+        run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{secrets.NUGET_TOKEN}}
+        
