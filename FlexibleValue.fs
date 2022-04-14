@@ -11,6 +11,7 @@ type FlexibleValue =
     | Float of float
     | Decimal of decimal
     | String of string
+
     // object types
     | Date of System.DateOnly
     | Time of System.TimeOnly
@@ -32,16 +33,16 @@ type FlexibleValue =
         
         static member inline TryWrap (incoming : 'a) : FlexibleValue option =
             match box incoming with
-            | :? FlexibleValue as flexValue -> flexValue |> Some // prevent nexted values
-            | :? bool as boolValue -> Boolean boolValue |> Some
-            | :? int as intValue -> Numeral intValue |> Some
-            | :? float as floatValue -> Float floatValue |> Some
-            | :? decimal as decimalValue -> Decimal decimalValue |> Some
-            | :? string as stringValue -> String stringValue |> Some
-            | :? System.DateOnly as dateValue -> Date dateValue |> Some
-            | :? System.TimeOnly as timeValue -> Time timeValue |> Some
-            | :? System.DateTime as datetimeValue -> DateTime datetimeValue |> Some
-            | :? System.TimeSpan as timespanValue -> TimeSpan timespanValue |> Some
+            | :? FlexibleValue as flexValue       -> Some flexValue // prevent nesting
+            | :? System.Boolean as boolValue      -> Some (Boolean boolValue)
+            | :? System.Int32 as intValue         -> Some (Numeral intValue)
+            | :? System.Double as floatValue      -> Some (Float floatValue)
+            | :? System.Decimal as decimalValue   -> Some (Decimal decimalValue)
+            | :? System.String as stringValue     -> Some (String stringValue)
+            | :? System.DateOnly as dateValue     -> Some (Date dateValue)
+            | :? System.TimeOnly as timeValue     -> Some (Time timeValue)
+            | :? System.DateTime as datetimeValue -> Some (DateTime datetimeValue)
+            | :? System.TimeSpan as timespanValue -> Some (TimeSpan timespanValue)
             | _ -> None
 
         static member inline Wrap (incoming : 'a) : FlexibleValue =
