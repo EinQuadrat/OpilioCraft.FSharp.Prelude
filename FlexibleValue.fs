@@ -3,6 +3,7 @@
 exception FlexibleValueException of ErrorMsg:string
     with override x.ToString () = $"[FlexibleValue] {x.ErrorMsg}"
 
+
 [<RequireQualifiedAccess>]
 type FlexibleValue =
     // primitive types
@@ -47,7 +48,7 @@ type FlexibleValue =
 
         static member inline Wrap (incoming : 'a) : FlexibleValue =
             FlexibleValue.TryWrap incoming
-            |> Option.defaultWith (raise <| FlexibleValueException $"unsupported support incoming type: {incoming.GetType().FullName}")
+            |> Option.defaultWith (fun _ -> raise <| FlexibleValueException $"unsupported support incoming type: {incoming.GetType().FullName}")
 
         member x.TryCompareTo value : int option =
             let compareFlexibleValues (fv1 : FlexibleValue) (fv2 : FlexibleValue) : int option =
