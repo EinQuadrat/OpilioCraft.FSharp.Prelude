@@ -1,6 +1,6 @@
 name: dotnet package
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
@@ -18,5 +18,5 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release
       - name: Publish
-        run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{secrets.NUGET_TOKEN}}
+        run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{secrets.NUGET_TOKEN}} -SkipDuplicate
         

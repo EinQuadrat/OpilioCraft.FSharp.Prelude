@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpilioCraft.FSharp.Prelude", "OpilioCraft.FSharp.Prelude.fsproj", "{E8900EE9-E227-492A-9DCE-3854636EFCB8}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TestSuite", "..\TestSuite\TestSuite.fsproj", "{7BDB993A-E90C-45CF-83D8-BB49AEE5416B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{E8900EE9-E227-492A-9DCE-3854636EFCB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8900EE9-E227-492A-9DCE-3854636EFCB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8900EE9-E227-492A-9DCE-3854636EFCB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BDB993A-E90C-45CF-83D8-BB49AEE5416B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BDB993A-E90C-45CF-83D8-BB49AEE5416B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BDB993A-E90C-45CF-83D8-BB49AEE5416B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BDB993A-E90C-45CF-83D8-BB49AEE5416B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
