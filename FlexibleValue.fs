@@ -30,7 +30,7 @@ type FlexibleValue =
             | FlexibleValue.Date dateValue -> dateValue.ToString("yyyy-MM-dd")
             | FlexibleValue.Time timeValue -> timeValue.ToString("hh:mm:ss")
             | FlexibleValue.DateTime datetimeValue -> datetimeValue.ToString("yyyy-MM-ddThh:mm:ss")
-            | FlexibleValue.TimeSpan timespanValue -> timespanValue.ToString("yyyy-MM-ddThh:mm:ss")
+            | FlexibleValue.TimeSpan timespanValue -> timespanValue.ToString("c")
         
         static member inline TryWrap (incoming : 'a) : FlexibleValue option =
             match box incoming with

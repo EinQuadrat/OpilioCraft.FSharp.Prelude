@@ -10,10 +10,12 @@ open Microsoft.FSharp.Reflection
 // exceptions
 exception IncompleteSetupException of MissingFile:string
     with override x.Message = $"incomplete user settings; missing file: {x.MissingFile}"
+
 exception InvalidUserSettingsException of File:string * ErrorMessage:string
     with override x.Message = $"invalid user settings; file {x.File} contains error: {x.ErrorMessage}"
+
 exception IncompatibleVersionException of Type:Type * Expected:Version * Found:Version
-    with override x.Message = $"version of settings file is not supported\n{x.Type.Name}: expected {x.Expected}, found {x.Found}"
+    with override x.Message = $"version of settings file is not supported\n{x.Type.FullName}: expected {x.Expected}, found {x.Found}"
 
 // json converters
 type EnumUnionConverter<'T> () =
@@ -59,13 +61,15 @@ module Verify =
     [<Literal>]
     let VersionPropertyName = "Version"
 
-    let tryGetVersion settings =
-        settings.GetType().GetProperty(VersionPropertyName, typeof<Version>)
+    let tryGetProperty<'a> name settings =
+        settings.GetType().GetProperty(name)
         |> Option.ofObj
-        |> Option.bind (fun versionProperty -> versionProperty.GetValue(settings) :?> Version |> Some)
+        |> Option.map (fun prop -> prop.GetValue(settings))
+        |> Option.bind (function | :? 'a as typedValue -> Some typedValue | _ -> None)
 
-    let raiseIfNone jsonFile message =
-        Option.orElseWith (fun () -> raise <| InvalidUserSettingsException(File = jsonFile, ErrorMessage = message))
+    let tryGetVersion settings =
+        settings
+        |> tryGetProperty<Version> VersionPropertyName
 
     let isVersion (expectedVersion : Version) settings =
         tryGetVersion settings
@@ -76,7 +80,15 @@ module Verify =
                 raise <| IncompatibleVersionException(Type = settings.GetType(), Expected = expectedVersion, Found = foundVersion)
             | _ -> settings
 
-    let isValidDirectory dir =
-        match System.IO.Directory.Exists(dir) with
-        | true -> Some dir
+    let raiseIfNone jsonFile message =
+        Option.orElseWith (fun _ -> raise <| InvalidUserSettingsException(File = jsonFile, ErrorMessage = message))
+
+    let isValidDirectory path =
+        match System.IO.Directory.Exists(path) with
+        | true -> Some path
+        | false -> None
+
+    let isValidFile path =
+        match System.IO.File.Exists(path) with
+        | true -> Some path
         | false -> None
