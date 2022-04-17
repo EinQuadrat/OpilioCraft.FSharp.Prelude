@@ -58,13 +58,13 @@ module UserSettingsHelper =
         IO.saveGuard jsonFile <| fun uri -> File.WriteAllText(uri, json)
 
     // supportive functions
-    let tryGetProperty<'a> name settings =
+    let tryGetProperty name settings =
         settings.GetType().GetProperty(name)
         |> Option.ofObj
-        |> Option.map (fun prop -> prop.GetValue(settings))
-        |> Option.bind (function | :? 'a as typedValue -> Some typedValue | _ -> None)
+        |> Option.map (fun prop -> prop.GetValue(box settings))
+        |> Option.bind (function | :? 'r as typedValue -> Some typedValue | _ -> None)
 
-    let hasProperty<'a> name settings =
+    let hasProperty name settings =
         settings.GetType().GetProperty(name)
         |> Option.ofObj
         |> Option.isSome
@@ -73,9 +73,8 @@ module Verify =
     [<Literal>]
     let VersionPropertyName = "Version"
 
-    let tryGetVersion settings =
-        settings
-        |> UserSettingsHelper.tryGetProperty<Version> VersionPropertyName
+    let tryGetVersion settings : Version option =
+        UserSettingsHelper.tryGetProperty VersionPropertyName settings
 
     let isVersion (expectedVersion : Version) settings =
         tryGetVersion settings
