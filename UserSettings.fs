@@ -57,19 +57,25 @@ module UserSettingsHelper =
         let json = JsonSerializer.Serialize<'T>(settings, options = jsonOptions) in
         IO.saveGuard jsonFile <| fun uri -> File.WriteAllText(uri, json)
 
-module Verify =
-    [<Literal>]
-    let VersionPropertyName = "Version"
-
+    // supportive functions
     let tryGetProperty<'a> name settings =
         settings.GetType().GetProperty(name)
         |> Option.ofObj
         |> Option.map (fun prop -> prop.GetValue(settings))
         |> Option.bind (function | :? 'a as typedValue -> Some typedValue | _ -> None)
 
+    let hasProperty<'a> name settings =
+        settings.GetType().GetProperty(name)
+        |> Option.ofObj
+        |> Option.isSome
+
+module Verify =
+    [<Literal>]
+    let VersionPropertyName = "Version"
+
     let tryGetVersion settings =
         settings
-        |> tryGetProperty<Version> VersionPropertyName
+        |> UserSettingsHelper.tryGetProperty<Version> VersionPropertyName
 
     let isVersion (expectedVersion : Version) settings =
         tryGetVersion settings
