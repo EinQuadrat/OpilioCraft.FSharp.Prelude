@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <PackageId>OpilioCraft.FSharp.Prelude</PackageId>
-    <Version>1.6.2</Version>
+    <Version>1.7.0</Version>
     <Authors>Carsten Schäfer</Authors>
     <Description>Collection of some useful code snippets for FSharp development</Description>
     <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>
@@ -25,7 +25,8 @@
     <Compile Include="FlexibleValue.fs" />
     <Compile Include="IO.fs" />
     <Compile Include="ObservableObject.fs" />
-    <Compile Include="Option.fs" />
+    <Compile Include="OptionExtension.fs" />
+    <Compile Include="ResultExtension.fs" />
     <Compile Include="Text.fs" />
     <Compile Include="TryWrapper.fs" />
     <Compile Include="ActivePatterns.fs" />
