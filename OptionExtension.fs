@@ -14,3 +14,7 @@ module Option =
     let tee action = function
         | Some value as maybe -> action value ; maybe
         | None -> None
+
+    let filterOrElseWith (predicate : 'T -> bool) (elseAction : 'T -> unit) = function
+        | Some value as opt -> if predicate value then opt else (elseAction value ; None)
+        | None -> None
