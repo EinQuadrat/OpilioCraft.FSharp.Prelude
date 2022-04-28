@@ -26,12 +26,12 @@ type DisposableBase() =
             try
                 if disposing then x.DisposeManagedResources()
             with
-            | exn -> Console.Error.WriteLine $"[DisposableBase] disposal of managed resources failed: {exn.Message}"
+                | exn -> Console.Error.WriteLine $"[{nameof DisposableBase}] disposal of managed resources failed: {exn.Message}"
 
             try
                 x.FreeNativeResources()
             with
-            | exn -> Console.Error.WriteLine $"[DisposableBase] disposal of unmanaged resources failed: {exn.Message}"
+                | exn -> Console.Error.WriteLine $"[{nameof DisposableBase}] disposal of unmanaged resources failed: {exn.Message}"
 
             _isDisposed <- true // in case of error: do not try again
 

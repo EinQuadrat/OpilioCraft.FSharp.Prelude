@@ -89,11 +89,11 @@ module Verify =
         Option.orElseWith (fun _ -> raise <| InvalidUserSettingsException(File = jsonFile, ErrorMessage = message))
 
     let isValidDirectory path =
-        match System.IO.Directory.Exists(path) with
+        match Directory.Exists(path) with
         | true -> Some path
         | false -> None
 
     let isValidFile path =
-        match System.IO.File.Exists(path) with
+        match File.Exists(path) with
         | true -> Some path
         | false -> None
