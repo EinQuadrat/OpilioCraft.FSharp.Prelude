@@ -19,10 +19,6 @@ module Fingerprint =
     open System.Security.Cryptography
     open System.Text.RegularExpressions
 
-    type Strategy =
-    | GuessFirst
-    | Calculate
-
     // Algorithm used
     let private hashingAlgorithm = SHA256.Create();
 
@@ -77,6 +73,15 @@ module Fingerprint =
             None
 
     // High-level API
+    type Strategy =
+        | Calculate = 0
+        | GuessFirst = 1
+
+    let tryParseStrategy (input : string) : Strategy option =
+        match System.Enum.TryParse<Strategy>(input, true) with
+        | true, value -> Some value
+        | _ -> None
+
     let getFingerprint (strategy : Strategy) (filename : string) =
         match strategy with
         | Strategy.GuessFirst -> tryGuessFingerprint filename
