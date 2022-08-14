@@ -19,6 +19,10 @@ module Fingerprint =
     open System.Security.Cryptography
     open System.Text.RegularExpressions
 
+    type Strategy =
+    | GuessFirst
+    | Calculate
+
     // Algorithm used
     let private hashingAlgorithm = SHA256.Create();
 
@@ -68,11 +72,15 @@ module Fingerprint =
             |> _fingerprintRegex.Match
 
         if matchResult.Success then
-            matchResult.Groups.[1].Value |> Some
+            Some <| matchResult.Groups.[1].Value
         else
             None
-        
-    let getFingerprint (filename : string) =
-        tryGuessFingerprint filename
+
+    // High-level API
+    let getFingerprint (strategy : Strategy) (filename : string) =
+        match strategy with
+        | Strategy.GuessFirst -> tryGuessFingerprint filename
+        | _ -> None
+
         |> Option.map QualifiedFingerprint.Derived
         |> Option.defaultValue (getFullFingerprint filename)
