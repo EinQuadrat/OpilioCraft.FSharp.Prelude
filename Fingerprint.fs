@@ -59,7 +59,7 @@ module Fingerprint =
     let getPartlyFingerprint filename = filename |> partlyFingerprintAsString |> QualifiedFingerprint.Partly
 
     // Guess fingerprint from filename
-    let private _fingerprintRegex = Regex(@".#([0-9a-z]{64})$", RegexOptions.Compiled)
+    let private _fingerprintRegex = Regex(@"^(.+)#([0-9a-z]{64})$", RegexOptions.Compiled)
 
     let tryGuessFingerprint (filename : string) : Fingerprint option =
         let matchResult =
@@ -68,9 +68,14 @@ module Fingerprint =
             |> _fingerprintRegex.Match
 
         if matchResult.Success then
-            Some <| matchResult.Groups.[1].Value
+            Some <| matchResult.Groups.[2].Value
         else
             None
+
+    let getPlainFilename (filename : string) : string =
+        match filename.LastIndexOf('#') with
+        | -1 -> filename
+        | found -> filename.Substring(0, found)
 
     // High-level API
     type Strategy =
