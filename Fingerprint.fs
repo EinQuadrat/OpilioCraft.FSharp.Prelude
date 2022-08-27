@@ -35,19 +35,19 @@ module Fingerprint =
                 yield byte currentByte
         }
 
-    let private readBytes filename length =
-        use stream = File.OpenRead(filename)
+    let private readBytes path length =
+        use stream = File.OpenRead(path)
         readStream stream |> Seq.truncate length |> Seq.toArray
 
     let private convertBytesToString (bytes : byte[]) =
         bytes |> Array.fold (fun resultString b -> resultString + b.ToString("x2")) ""
     
     // Fingerprint calculations
-    let calculatePartlyFingerprint filename =
-        hashingAlgorithm.ComputeHash(readBytes filename 1024)
+    let calculatePartlyFingerprint path =
+        hashingAlgorithm.ComputeHash(readBytes path 1024)
 
-    let calculateFingerprint filename =
-        use stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024)
+    let calculateFingerprint path =
+        use stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024)
         hashingAlgorithm.ComputeHash(stream)
 
     // Converter functions
@@ -55,15 +55,17 @@ module Fingerprint =
     let partlyFingerprintAsString = calculatePartlyFingerprint >> convertBytesToString
 
     // Typed result
-    let getFullFingerprint filename = filename |> fingerprintAsString |> QualifiedFingerprint.Full
-    let getPartlyFingerprint filename = filename |> partlyFingerprintAsString |> QualifiedFingerprint.Partly
+    let getFullFingerprint = fingerprintAsString >> QualifiedFingerprint.Full
+    let getPartlyFingerprint = partlyFingerprintAsString >> QualifiedFingerprint.Partly
 
     // Guess fingerprint from filename
+    [<Literal>]
+    let FingerprintSeparator = "#"
     let private _fingerprintRegex = Regex(@"^(.+)#([0-9a-z]{64})$", RegexOptions.Compiled)
 
-    let tryGuessFingerprint (filename : string) : Fingerprint option =
+    let tryGuessFingerprint (path : string) : Fingerprint option =
         let matchResult =
-            filename
+            path
             |> Path.GetFileNameWithoutExtension
             |> _fingerprintRegex.Match
 
@@ -71,11 +73,6 @@ module Fingerprint =
             Some <| matchResult.Groups.[2].Value
         else
             None
-
-    let getPlainFilename (filename : string) : string =
-        match filename.LastIndexOf('#') with
-        | -1 -> filename
-        | found -> filename.Substring(0, found)
 
     // High-level API
     type Strategy =
@@ -94,3 +91,25 @@ module Fingerprint =
 
         |> Option.map QualifiedFingerprint.Derived
         |> Option.defaultValue (getFullFingerprint filename)
+
+
+module FingerprintExtension =
+    let private getFilenameWithoutFingerprint (path : string) =
+        let filename = System.IO.Path.GetFileNameWithoutExtension(path)
+
+        match filename.LastIndexOf('#') with
+        | -1 -> filename
+        | found -> filename.Substring(0, found)
+
+    type System.IO.Path with
+        static member GetFilenameWithoutFingerprint(path : string) =
+            getFilenameWithoutFingerprint path
+
+        static member InjectFingerprint(path : string, fingerprint : Fingerprint) : string =
+            let directory = System.IO.Path.GetDirectoryName(path)
+            let filename = getFilenameWithoutFingerprint path
+            let extension = System.IO.Path.GetExtension(path)
+
+            let augmentedFilename = $"{filename}{Fingerprint.FingerprintSeparator}{fingerprint}{extension}"
+            
+            System.IO.Path.Combine(directory, augmentedFilename)
