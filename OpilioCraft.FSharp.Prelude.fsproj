@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <PackageId>OpilioCraft.FSharp.Prelude</PackageId>
-    <Version>2.2.1</Version>
+    <Version>2.3.0</Version>
     <Authors>Carsten Schäfer</Authors>
     <Description>Collection of some useful code snippets for FSharp development</Description>
     <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>

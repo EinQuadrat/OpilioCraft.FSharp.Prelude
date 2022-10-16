@@ -102,6 +102,10 @@ module FingerprintExtension =
         | found -> filename.Substring(0, found)
 
     type System.IO.Path with
+        static member ContainsFingerprint(path : string) : bool =
+            Fingerprint.tryGuessFingerprint path
+            |> function | Some x -> true | _ -> false
+
         static member GetFilenameWithoutFingerprint(path : string) =
             getFilenameWithoutFingerprint path
 
