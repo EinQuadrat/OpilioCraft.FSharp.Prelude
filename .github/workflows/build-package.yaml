@@ -19,4 +19,4 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release --no-restore
       - name: Publish
-        run: dotnet nuget push **/*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push **/*.nupkg -s 'https://nuget.pkg.github.com/EinQuadrat/index.json' -k ${{ secrets.GITHUB_TOKEN }}
