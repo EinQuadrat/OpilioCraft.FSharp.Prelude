@@ -1,0 +1,16 @@
+name: Publish .NET package
+
+on:
+  workflow_run:
+    workflows: ["Build .NET package"]
+      types:
+        - completed
+    workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{ secrets.GITHUB_TOKEN }} -SkipDuplicate
+        
