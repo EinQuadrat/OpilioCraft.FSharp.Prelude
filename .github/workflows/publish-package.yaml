@@ -3,9 +3,9 @@ name: Publish .NET package
 on:
   workflow_run:
     workflows: ["Build .NET package"]
-      types:
-        - completed
-    workflow_dispatch:
+    types:
+      - completed  
+  workflow_dispatch:
 
 jobs:
   publish:
