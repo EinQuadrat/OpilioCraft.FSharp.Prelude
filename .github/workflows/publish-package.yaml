@@ -1,8 +1,8 @@
-name: Publish .NET package
+name: Create and Publish
 
 on:
   workflow_run:
-    workflows: ["Build .NET package"]
+    workflows: [Build]
     types:
       - completed  
   workflow_dispatch:
@@ -12,5 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{ secrets.GITHUB_TOKEN }} -SkipDuplicate
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '7.0.x'
+      - name: Pack
+        run: dotnet pack --configuration Release --no-restore
+      - name: Publish
+        run: dotnet nuget push **/*.nupkg -Source 'https://nuget.pkg.github.com/EinQuadrat/index.json' -ApiKey ${{ secrets.GITHUB_TOKEN }}
         
