@@ -97,3 +97,6 @@ module Verify =
         match File.Exists(path) with
         | true -> Some path
         | false -> None
+
+    let notNull value =
+        not (value = Unchecked.defaultof<_>)
