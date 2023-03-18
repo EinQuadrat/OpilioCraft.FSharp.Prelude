@@ -36,7 +36,7 @@ type EnumUnionConverter<'T> () =
         writer.WriteStringValue(value.ToString())
 
 
-module UserSettingsHelper =
+module UserSettings =
     // load user settings
     let load<'T> jsonFilename =
         File.Exists(jsonFilename) -||- IncompleteSetupException(MissingFile = jsonFilename)
@@ -48,12 +48,15 @@ module UserSettingsHelper =
         | exn -> raise <| InvalidUserSettingsException(File = jsonFilename, ErrorMessage = exn.Message)
 
     // load user settings on demand
-    let lazyLoad<'T> jsonFilename = lazy ( load<'T> jsonFilename )
+    let lazyLoadAndVerify<'T> jsonFilename (verifier : 'T -> 'T) = lazy ( load<'T> jsonFilename |> verifier )
+    let lazyLoad<'T> jsonFilename = lazyLoadAndVerify<'T> jsonFilename id
 
     // save
-    let save<'T> jsonFile jsonOptions settings =
+    let saveWithOptions<'T> jsonFile jsonOptions settings =
         let json = JsonSerializer.Serialize<'T>(settings, options = jsonOptions) in
         IO.saveGuard jsonFile <| fun uri -> File.WriteAllText(uri, json)
+
+    let save<'T> jsonFile settings = saveWithOptions<'T> jsonFile (JsonSerializerOptions.Default)
 
     // supportive functions
     let tryGetProperty name settings =
@@ -72,7 +75,7 @@ module Verify =
     let VersionPropertyName = "Version"
 
     let tryGetVersion settings : Version option =
-        UserSettingsHelper.tryGetProperty VersionPropertyName settings
+        UserSettings.tryGetProperty VersionPropertyName settings
 
     let isVersion (expectedVersion : Version) settings =
         tryGetVersion settings
