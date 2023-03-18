@@ -37,20 +37,18 @@ type EnumUnionConverter<'T> () =
 
 
 module UserSettingsHelper =
-    let (-||-) condition exn = if not condition then raise exn
-
     // load user settings
-    let load<'T> jsonFilename jsonOptions =
+    let load<'T> jsonFilename =
         File.Exists(jsonFilename) -||- IncompleteSetupException(MissingFile = jsonFilename)
 
         try
             let settingsAsJson = File.ReadAllText(jsonFilename)
-            JsonSerializer.Deserialize<'T>(settingsAsJson, options = jsonOptions)
+            JsonSerializer.Deserialize<'T>(settingsAsJson)
         with
         | exn -> raise <| InvalidUserSettingsException(File = jsonFilename, ErrorMessage = exn.Message)
 
     // load user settings on demand
-    let lazyLoad<'T> jsonFilename jsonOptions = lazy ( load<'T> jsonFilename jsonOptions )
+    let lazyLoad<'T> jsonFilename = lazy ( load<'T> jsonFilename )
 
     // save
     let save<'T> jsonFile jsonOptions settings =

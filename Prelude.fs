@@ -20,3 +20,8 @@ module Prelude =
     /// Check if a value is not null. Useful e.g. in context of JSON parsing.
     /// </summary>
     let inline isNotNull value = not (isNull value)
+
+    /// <summary>
+    /// Simplifies verification of critical conditions.
+    /// </summary>
+    let inline (-||-) condition exn = if not condition then raise exn
