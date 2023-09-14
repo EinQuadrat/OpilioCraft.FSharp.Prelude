@@ -24,4 +24,11 @@ module Prelude =
     /// <summary>
     /// Simplifies verification of critical conditions.
     /// </summary>
-    let inline (-||-) condition exn = if not condition then raise exn
+    let inline ( -||- ) condition exn = if not condition then raise exn
+
+    /// <summary>
+    /// Allows to apply a side effect without changing the value
+    /// </summary>
+    /// <param name="x">The value.</param>
+    /// <param name="f">The side effect to apply.</param>
+    let inline ( |>! ) x f = ignore(f x); x

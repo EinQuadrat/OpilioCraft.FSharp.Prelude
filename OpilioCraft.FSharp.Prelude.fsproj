@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <PackageId>OpilioCraft.FSharp.Prelude</PackageId>
-    <Version>4.1.1</Version>
+    <Version>4.2.0</Version>
     <Authors>Carsten Schäfer</Authors>
     <Description>Collection of some useful code snippets for FSharp development</Description>
-    <Copyright>Copyright (c) 2022 by Carsten Schäfer</Copyright>
+    <Copyright>Copyright (c) 2022-2023 by Carsten Schäfer</Copyright>
     <RepositoryUrl>https://github.com/EinQuadrat/OpilioCraft.FSharp.Prelude.git</RepositoryUrl>
     <PackageTags>OpilioCraft;FSharp</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
