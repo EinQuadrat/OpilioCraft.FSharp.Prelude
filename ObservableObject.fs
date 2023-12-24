@@ -14,7 +14,7 @@ type ObservableObject () =
 
     interface INotifyPropertyChanged with
         [<CLIEvent>]
-        member this.PropertyChanged = _event_PropertyChanged.Publish
+        member _.PropertyChanged = _event_PropertyChanged.Publish
 
     // Make it easier to use this interface ;-)
     member this.PropertyChanged = (this :> INotifyPropertyChanged).PropertyChanged

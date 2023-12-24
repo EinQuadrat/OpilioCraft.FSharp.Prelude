@@ -59,13 +59,13 @@ type FlexibleValue =
             | Boolean plainValue  -> plainValue :> obj
             | Numeral plainValue  -> plainValue :> obj
             | Float plainValue    -> plainValue :> obj
-            | Decimal plainValue   -> plainValue :> obj
+            | Decimal plainValue  -> plainValue :> obj
             | String plainValue   -> plainValue :> obj
             
             // object types
             | DateTime plainValue -> plainValue :> obj
-            | Date plainValue -> plainValue :> obj
-            | Time plainValue -> plainValue :> obj
+            | Date plainValue     -> plainValue :> obj
+            | Time plainValue     -> plainValue :> obj
             | TimeSpan plainValue -> plainValue :> obj
 
         member x.TryCompareTo value : int option =

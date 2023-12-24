@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>OpilioCraft.FSharp.Prelude</PackageId>
-    <Version>4.2.1</Version>
+    <Version>5.0.0</Version>
     <Authors>Carsten Schäfer</Authors>
     <Description>Collection of some useful code snippets for FSharp development</Description>
     <Copyright>Copyright (c) 2022-2023 by Carsten Schäfer</Copyright>
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Include="Prelude.fs" />
+    <Compile Include="DiscriminatedUnionExtension.fs" />
     <Compile Include="DisposableBase.fs" />
     <Compile Include="FileSystem.fs" />
     <Compile Include="Fingerprint.fs" />

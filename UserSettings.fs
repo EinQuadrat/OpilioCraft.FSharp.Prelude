@@ -30,7 +30,7 @@ type EnumUnionConverter<'T> () =
             let casePrototype = cases.[rawCase]
             FSharpValue.MakeUnion(casePrototype, args = [| |]) :?> 'T
         with
-        | :? System.Collections.Generic.KeyNotFoundException -> failwith $"[{nameof(EnumUnionConverter)}] \"{rawCase}\" is not a valid case for {typeof<'T>.Name}"
+            | :? Collections.Generic.KeyNotFoundException -> failwith $"[{nameof(EnumUnionConverter)}] \"{rawCase}\" is not a valid case for {typeof<'T>.Name}"
 
     override _.Write (writer: Utf8JsonWriter, value: 'T, _: JsonSerializerOptions) =
         writer.WriteStringValue(value.ToString())
@@ -45,7 +45,7 @@ module UserSettings =
             let settingsAsJson = File.ReadAllText(jsonFilename)
             JsonSerializer.Deserialize<'T>(settingsAsJson, options = jsonOptions)
         with
-        | exn -> raise <| InvalidUserSettingsException(File = jsonFilename, ErrorMessage = exn.Message)
+            | exn -> raise <| InvalidUserSettingsException(File = jsonFilename, ErrorMessage = exn.Message)
 
     let load<'T> jsonFilename = loadWithOptions<'T> jsonFilename (JsonSerializerOptions.Default)
 
