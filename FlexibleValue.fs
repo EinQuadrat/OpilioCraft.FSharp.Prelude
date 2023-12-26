@@ -1,7 +1,7 @@
 ﻿namespace OpilioCraft.FSharp.Prelude
 
 exception FlexibleValueException of ErrorMsg:string
-    with override x.ToString () = $"[FlexibleValue] {x.ErrorMsg}"
+    with override x.Message = $"[FlexibleValue] {x.ErrorMsg}"
 
 [<RequireQualifiedAccess>]
 type FlexibleValue =
