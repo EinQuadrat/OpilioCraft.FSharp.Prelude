@@ -27,8 +27,8 @@ type FlexibleValue =
             | Decimal numValue -> numValue.ToString()
             | String stringValue -> stringValue
             | Date dateValue -> dateValue.ToString("yyyy-MM-dd")
-            | Time timeValue -> timeValue.ToString("hh:mm:ss")
-            | DateTime datetimeValue -> datetimeValue.ToString("yyyy-MM-ddThh:mm:ss")
+            | Time timeValue -> timeValue.ToString("HH:mm:ss")
+            | DateTime datetimeValue -> datetimeValue.ToString("yyyy-MM-ddTHH:mm:ss")
             | TimeSpan timespanValue -> timespanValue.ToString("c")
         
         static member inline TryWrap (incoming : 'a) : FlexibleValue option =
